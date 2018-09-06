@@ -1,0 +1,9 @@
+D:\C#Study\DicomProcess\DicomProcess\bin\Release\DicomProcess.exe.config
+D:\C#Study\DicomProcess\DicomProcess\bin\Release\DicomProcess.exe
+D:\C#Study\DicomProcess\DicomProcess\bin\Release\DicomProcess.pdb
+D:\C#Study\DicomProcess\DicomProcess\bin\Release\Dicom.Core.dll
+D:\C#Study\DicomProcess\DicomProcess\bin\Release\log4net.dll
+D:\C#Study\DicomProcess\DicomProcess\bin\Release\Dicom.Core.pdb
+D:\C#Study\DicomProcess\DicomProcess\obj\Release\DicomProcess.exe
+D:\C#Study\DicomProcess\DicomProcess\obj\Release\DicomProcess.pdb
+D:\C#Study\DicomProcess\DicomProcess\obj\Release\DicomProcess.csprojResolveAssemblyReference.cache

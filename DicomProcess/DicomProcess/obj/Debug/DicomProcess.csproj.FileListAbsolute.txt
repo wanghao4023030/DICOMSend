@@ -1,0 +1,8 @@
+D:\C#Study\DicomProcess\DicomProcess\bin\Debug\DicomProcess.exe.config
+D:\C#Study\DicomProcess\DicomProcess\bin\Debug\DicomProcess.exe
+D:\C#Study\DicomProcess\DicomProcess\bin\Debug\DicomProcess.pdb
+D:\C#Study\DicomProcess\DicomProcess\bin\Debug\Dicom.Core.dll
+D:\C#Study\DicomProcess\DicomProcess\bin\Debug\Dicom.Core.pdb
+D:\C#Study\DicomProcess\DicomProcess\obj\Debug\DicomProcess.exe
+D:\C#Study\DicomProcess\DicomProcess\obj\Debug\DicomProcess.pdb
+D:\C#Study\DicomProcess\DicomProcess\obj\Debug\DicomProcess.csprojResolveAssemblyReference.cache
