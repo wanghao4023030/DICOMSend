@@ -26,6 +26,7 @@ using SCU;
 using SimulatePrint;
 using MultiThreadPrint;
 using log4net;
+using System.Configuration;
 
 namespace DicomProcess
 {
@@ -37,7 +38,8 @@ namespace DicomProcess
             log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             MultiThreadPrintClass MultiThread = new MultiThreadPrintClass();
             MultiThread.StartThreadTask();
-            
+
+
         }
 
 

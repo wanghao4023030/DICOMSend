@@ -21,7 +21,12 @@ namespace SimulatePrint
         public ClassSCU SCUClient = new ClassSCU();
         public IntergrationWebClass IntergrationWeb = new IntergrationWebClass();
         public PatitentClass Patient = new PatitentClass();
+
+        static object l = new object();
         public int SleepSecond = int.Parse(ConfigurationManager.AppSettings["PrintIntervalTime"]);
+        string ExecuteMode = ConfigurationManager.AppSettings["Model"];
+        public int PrintCount;
+
         log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public string init() 
@@ -29,6 +34,7 @@ namespace SimulatePrint
 
             try
             {
+                PrintCount = 0;
                 WaterMark.CreateFolderByThreadCount();
                 for (int i = 1; i <= Int32.Parse(WaterMark.threadCount); i++)
                 {
@@ -60,7 +66,18 @@ namespace SimulatePrint
                     SCUClient.CreateDicomFile(localpath);
                     SCUClient.SendDicomFile(localpath);
                     log.Info("Try to send the dicom to SCP  infomartion as : " + localpath + " PID: " + Patient.PatientID + TaskID +" ACCN: "+ Patient.AccessionNumber + TaskID);
-                    Thread.Sleep(SleepSecond*1000);
+
+                    if (ExecuteMode.ToUpper().Equals("COUNT"))
+                    {
+                        lock (l)
+                        {
+                            PrintCount = PrintCount + 1;
+                            //Console.Out.WriteLine("Locking");
+                        }
+                    }
+
+                    Thread.Sleep(SleepSecond * 1000);
+                    //Console.Out.WriteLine(PrintCount);
                     return "true";
             }
             catch (Exception ex)

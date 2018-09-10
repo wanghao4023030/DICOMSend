@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SimulatePrint;
 using System.Threading;
 using log4net;
+using System.Configuration;
 
 namespace MultiThreadPrint
 {
@@ -13,6 +14,12 @@ namespace MultiThreadPrint
     {
         private SimulatePrintClass SimPrintObj = new SimulatePrintClass();
         CancellationTokenSource cts = new CancellationTokenSource();
+        string ExecuteMode = ConfigurationManager.AppSettings["Model"];
+        int ExecuteTime = Int32.Parse( ConfigurationManager.AppSettings["ExecuteTime"]);
+        int ExecuteCount = Int32.Parse(ConfigurationManager.AppSettings["ExecuteCount"]);
+        
+
+        
         log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public void StartThreadTask()
@@ -50,7 +57,7 @@ namespace MultiThreadPrint
            while (!cancellationToken.IsCancellationRequested)
                     {
                         SimPrintObj.SendDicom(TaskID);
-                        Thread.Sleep(1000);
+                        Thread.Sleep(1200);
                     }
            Console.Out.WriteLine("线程：" + TaskID + " 已退出." + "Thread：" + TaskID + " has quit.");
            log.Debug("Thread：" + TaskID + " exit.");
@@ -58,19 +65,60 @@ namespace MultiThreadPrint
 
 
 
+
         public void check()
         {
-            Console.Out.WriteLine("输入 \'Exit\' 退出程序-Input \'Exit\' to quit.");
-            string input = Console.ReadLine();
-            if (input.Equals("Exit"))
+            //Stop with parameter Time
+            if (ExecuteMode.ToUpper().Equals("TIME"))
             {
+                DateTime CurrentDatetime = DateTime.Now;
+                Console.Out.WriteLine(CurrentDatetime.ToString());
+                DateTime WantedDateTime = CurrentDatetime.AddMinutes(ExecuteTime);
+
+                while (DateTime.Compare(CurrentDatetime, WantedDateTime) < 0)
+                {
+                    CurrentDatetime = DateTime.Now;
+                    //Console.Out.WriteLine("Time is not arrived");
+                    Thread.Sleep(1000);
+                }
+                Console.Out.WriteLine(DateTime.Now);
                 cts.Cancel();
                 Console.Out.WriteLine("等待线程退出....Wait the thread to qiut...");
+
             }
-            else
+
+            //Stop with parameter Count
+            if (ExecuteMode.ToUpper().Equals("COUNT"))
             {
-                check();
+                Console.Out.WriteLine(ExecuteCount);
+                while (SimPrintObj.PrintCount < ExecuteCount)
+                {
+                    Console.Out.WriteLine("{0} DICOM has printed. The goal is: {1}", SimPrintObj.PrintCount, ExecuteCount);
+                    Thread.Sleep(1000);
+                }
+                Console.Out.WriteLine(DateTime.Now);
+                cts.Cancel();
+                Console.Out.WriteLine("等待线程退出....Wait the thread to qiut...");
+
             }
+
+            //Stop by manual operations
+            if (ExecuteMode.ToUpper().Equals("MANUAL"))
+            { 
+                Console.Out.WriteLine("输入 \'Exit\' 退出程序-Input \'Exit\' to quit.");
+                string input = Console.ReadLine();
+                if (input.Equals("Exit"))
+                {
+                    cts.Cancel();
+                    Console.Out.WriteLine("等待线程退出....Wait the thread to qiut...");
+                }
+                else
+                {
+                    check();
+                }
+            }
+
+
         }
 
 
