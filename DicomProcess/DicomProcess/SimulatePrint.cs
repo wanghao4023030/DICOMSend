@@ -25,6 +25,7 @@ namespace SimulatePrint
         static object l = new object();
         public int SleepSecond = int.Parse(ConfigurationManager.AppSettings["PrintIntervalTime"]);
         string ExecuteMode = ConfigurationManager.AppSettings["Model"];
+        string ExecuteCount = ConfigurationManager.AppSettings["ExecuteCount"];
         public int PrintCount;
 
         log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -66,18 +67,22 @@ namespace SimulatePrint
                     SCUClient.CreateDicomFile(localpath);
                     SCUClient.SendDicomFile(localpath);
                     log.Info("Try to send the dicom to SCP  infomartion as : " + localpath + " PID: " + Patient.PatientID + TaskID +" ACCN: "+ Patient.AccessionNumber + TaskID);
+                    
 
                     if (ExecuteMode.ToUpper().Equals("COUNT"))
                     {
                         lock (l)
                         {
+                            //Thread.Sleep(3000);
                             PrintCount = PrintCount + 1;
                             //Console.Out.WriteLine("Locking");
+                            //Console.Out.WriteLine("{0} DICOM has printed. The goal is: {1}", PrintCount, ExecuteCount);
                         }
                     }
 
-                    Thread.Sleep(SleepSecond * 1000);
+                    
                     //Console.Out.WriteLine(PrintCount);
+                    Thread.Sleep(SleepSecond * 1000);
                     return "true";
             }
             catch (Exception ex)

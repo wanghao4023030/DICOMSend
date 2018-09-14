@@ -57,7 +57,7 @@ namespace MultiThreadPrint
            while (!cancellationToken.IsCancellationRequested)
                     {
                         SimPrintObj.SendDicom(TaskID);
-                        Thread.Sleep(1200);
+                        Thread.Sleep(1000);
                     }
            Console.Out.WriteLine("线程：" + TaskID + " 已退出." + "Thread：" + TaskID + " has quit.");
            log.Debug("Thread：" + TaskID + " exit.");
@@ -81,6 +81,7 @@ namespace MultiThreadPrint
                     //Console.Out.WriteLine("Time is not arrived");
                     Thread.Sleep(1000);
                 }
+                
                 Console.Out.WriteLine(DateTime.Now);
                 cts.Cancel();
                 Console.Out.WriteLine("等待线程退出....Wait the thread to qiut...");
@@ -96,6 +97,7 @@ namespace MultiThreadPrint
                     Console.Out.WriteLine("{0} DICOM has printed. The goal is: {1}", SimPrintObj.PrintCount, ExecuteCount);
                     Thread.Sleep(1000);
                 }
+                Console.Out.WriteLine("{0} DICOM has printed. The goal is: {1}", SimPrintObj.PrintCount, ExecuteCount);
                 Console.Out.WriteLine(DateTime.Now);
                 cts.Cancel();
                 Console.Out.WriteLine("等待线程退出....Wait the thread to qiut...");

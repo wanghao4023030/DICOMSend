@@ -8,11 +8,11 @@ D:\C#Study\DicomProcess\DicomProcess\obj\Release\DicomProcess.exe
 D:\C#Study\DicomProcess\DicomProcess\obj\Release\DicomProcess.pdb
 D:\C#Study\DicomProcess\DicomProcess\obj\Release\DicomProcess.csprojResolveAssemblyReference.cache
 D:\PrintSender\DicomProcess\DicomProcess\bin\Release\DicomProcess.exe.config
-D:\PrintSender\DicomProcess\DicomProcess\obj\Release\DicomProcess.exe
-D:\PrintSender\DicomProcess\DicomProcess\obj\Release\DicomProcess.pdb
 D:\PrintSender\DicomProcess\DicomProcess\bin\Release\DicomProcess.exe
 D:\PrintSender\DicomProcess\DicomProcess\bin\Release\DicomProcess.pdb
 D:\PrintSender\DicomProcess\DicomProcess\bin\Release\Dicom.Core.dll
 D:\PrintSender\DicomProcess\DicomProcess\bin\Release\log4net.dll
 D:\PrintSender\DicomProcess\DicomProcess\bin\Release\Dicom.Core.pdb
+D:\PrintSender\DicomProcess\DicomProcess\obj\Release\DicomProcess.exe
+D:\PrintSender\DicomProcess\DicomProcess\obj\Release\DicomProcess.pdb
 D:\PrintSender\DicomProcess\DicomProcess\obj\Release\DicomProcess.csprojResolveAssemblyReference.cache
