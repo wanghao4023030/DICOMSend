@@ -60,9 +60,14 @@ namespace SimulatePrint
             string patientInfo = Patient.DateWithMS;
             string result = IntergrationWeb.request_CreatePatient(patientInfo + TaskID);
             string localpath = WaterMark.executePath + @"WaterMark" + TaskID + @"\";
+            //while (!result.Equals("true"))
+            //{
+            //    result = IntergrationWeb.request_CreatePatient(patientInfo + TaskID);
+            //}
 
             try
             {
+                if (result.Equals("true")) { 
                     WaterMark.AddWaterMarkByFolder(localpath, Patient.PatientID + TaskID, Patient.AccessionNumber + TaskID);
                     SCUClient.CreateDicomFile(localpath);
                     SCUClient.SendDicomFile(localpath);
@@ -84,6 +89,8 @@ namespace SimulatePrint
                     //Console.Out.WriteLine(PrintCount);
                     Thread.Sleep(SleepSecond * 1000);
                     return "true";
+                }
+                return "false";
             }
             catch (Exception ex)
             {

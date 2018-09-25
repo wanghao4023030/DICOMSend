@@ -37,8 +37,13 @@ namespace DicomProcess
 
             log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             MultiThreadPrintClass MultiThread = new MultiThreadPrintClass();
-            MultiThread.StartThreadTask();
+            string ExecuteLoop = ConfigurationManager.AppSettings["Loop"];
+            int ExecuteLoopCount = Int32.Parse(ConfigurationManager.AppSettings["LoopCount"]);
+            int ExecuteLoopDelay = Int32.Parse(ConfigurationManager.AppSettings["LoopDelay"]);
+            int ExecuteCount = Int32.Parse(ConfigurationManager.AppSettings["ExecuteCount"]);
+            int PrintIntervalTime = Int32.Parse(ConfigurationManager.AppSettings["PrintIntervalTime"]);
 
+            MultiThread.StartThreadTask();
 
         }
 
