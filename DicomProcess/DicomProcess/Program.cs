@@ -43,7 +43,10 @@ namespace DicomProcess
             int ExecuteCount = Int32.Parse(ConfigurationManager.AppSettings["ExecuteCount"]);
             int PrintIntervalTime = Int32.Parse(ConfigurationManager.AppSettings["PrintIntervalTime"]);
 
-            MultiThread.StartThreadTask();
+            //MultiThread.StartThreadTask();
+
+            SimulatePrintClass SimPrintObj = new SimulatePrintClass();
+            SimPrintObj.init();
 
         }
 

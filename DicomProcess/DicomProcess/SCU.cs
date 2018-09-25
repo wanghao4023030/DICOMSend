@@ -41,10 +41,11 @@ namespace SCU
             string SCURootPath = Path + @"SCU";
             string SCUImageFolderPath = Path + @"SCU\database";
             string ImagePath = Path + @"images";
+            System.IO.DirectoryInfo di = new DirectoryInfo(SCUImageFolderPath);
 
             try
             {
-                System.IO.DirectoryInfo di = new DirectoryInfo(SCUImageFolderPath);
+
                 foreach (FileInfo file in di.GetFiles())
                 {
                     file.Delete();

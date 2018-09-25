@@ -7,6 +7,7 @@ using System.Configuration;
 using System.IO;
 using System.Diagnostics;
 using log4net;
+using System.Threading;
 namespace WaterMark
 {
     class WaterMarkClass
@@ -41,7 +42,34 @@ namespace WaterMark
             {
                 for (int i = 1; i <= Int32.Parse(threadCount); i++)
                 {
+                    string strFlage = DeleteFolderALl(executePath + "WaterMark" + i);
+                    int count = 0;
+                    while (!strFlage.Equals("true") && count < 10)
+                    {
+                        Thread.Sleep(10 * 1000);
+                        strFlage = DeleteFolderALl(executePath + "WaterMark" + i);
+                        count = count + 1;
+                    }
+                    if (count >= 10)
+                    {
+                        log.Error("Try to delete folder " + executePath + "WaterMark" + i + "failed and retry times is " + count);
+                    }
+
+                    if (strFlage.Equals("true"))
+                    {
+                        log.Info("Finally the folder delete successfully. " + executePath + "WaterMark" + i + " and retry times is " + count);
+                    }
+
+                    
+                }
+
+
+
+                for (int i = 1; i <= Int32.Parse(threadCount); i++)
+                {
+
                     CopyFolderAll(executePath + "WaterMark", executePath + "WaterMark" + i);
+                    Thread.Sleep(1000);
                     log.Debug("Copy watermark folder to application folder with threadcount sucessfully. " + executePath + "WaterMark to " + executePath + "WaterMark" + i);
                 }
                
@@ -195,10 +223,42 @@ namespace WaterMark
             
         }
 
+        //Delete all files by folder path
+        private string DeleteFolderALl(string path)
+        {
+            System.IO.DirectoryInfo di = new DirectoryInfo(path);
+            if (di.Exists)
+            {
+                try
+                {
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
 
+                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
 
+                    di.Delete(true);
+                    log.Debug("Delete all folders and files from folder " + path + " successfully.");
+                    return "true";
+                }
 
-
+                catch (Exception ex)
+                {
+                    log.Error("Delete all folders and files from folder " + path + " failed.", ex);
+                    return ex.ToString();
+                }
+            }
+            else
+            {
+                log.Info("The folders is not exist!!" + path);
+                return "true";
+            }
+        
+        }
 
     }
 }

@@ -37,12 +37,12 @@ namespace SimulatePrint
             {
                 PrintCount = 0;
                 WaterMark.CreateFolderByThreadCount();
-                for (int i = 1; i <= Int32.Parse(WaterMark.threadCount); i++)
-                {
-                    string RootFolder = WaterMark.executePath + @"WaterMark" + i + @"\SCU\";
-                    SCUClient.ConfigPrinterIP(RootFolder);
-                }
-                log.Info("Init the thread application folder and SCU configuration.");
+                //for (int i = 1; i <= Int32.Parse(WaterMark.threadCount); i++)
+                //{
+                //    string RootFolder = WaterMark.executePath + @"WaterMark" + i + @"\SCU\";
+                //    SCUClient.ConfigPrinterIP(RootFolder);
+                //}
+                //log.Info("Init the thread application folder and SCU configuration.");
                 return "true";
             }
             catch (Exception ex)
@@ -60,10 +60,6 @@ namespace SimulatePrint
             string patientInfo = Patient.DateWithMS;
             string result = IntergrationWeb.request_CreatePatient(patientInfo + TaskID);
             string localpath = WaterMark.executePath + @"WaterMark" + TaskID + @"\";
-            //while (!result.Equals("true"))
-            //{
-            //    result = IntergrationWeb.request_CreatePatient(patientInfo + TaskID);
-            //}
 
             try
             {
