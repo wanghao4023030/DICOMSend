@@ -41,6 +41,7 @@ namespace SCU
             string SCURootPath = Path + @"SCU";
             string SCUImageFolderPath = Path + @"SCU\database";
             string ImagePath = Path + @"images";
+
             System.IO.DirectoryInfo di = new DirectoryInfo(SCUImageFolderPath);
 
             try
@@ -71,12 +72,12 @@ namespace SCU
                 proc.StartInfo.WorkingDirectory = SCURootPath;
                 proc.StartInfo.FileName = "dcmpsprt";
                 proc.StartInfo.Arguments = " -v -c " + SCURootPath + @"\dcmpstat.cfg.scu --printer IHEFULL " + ImagePath + @"\sample.dcm";
-                proc.StartInfo.CreateNoWindow = false;
+                proc.StartInfo.CreateNoWindow = true;
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.Start();
                 proc.WaitForExit();
                 proc.Close();
-
+                proc.Dispose();
                 string[] SP_DicomFilePath = System.IO.Directory.GetFiles(SCUImageFolderPath, "SP_*.dcm");
                 if (SP_DicomFilePath.Length == 1)
                 {
@@ -117,12 +118,12 @@ namespace SCU
                 proc.StartInfo.WorkingDirectory = SCURootPath;
                 proc.StartInfo.FileName = "dcmprscu.exe";
                 proc.StartInfo.Arguments = " -d -v -c " + SCURootPath + @"\dcmpstat.cfg.scu --copies 1 " + SP_DicomFilePath[0];
-                proc.StartInfo.CreateNoWindow = false;
+                proc.StartInfo.CreateNoWindow = true;
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.Start();
                 proc.WaitForExit();
                 proc.Close();
-
+                proc.Dispose();
                 log.Debug("Send DCIOM file(" + SP_DicomFilePath[0] + ") to SCP successfully.");
                 return "true";
             }

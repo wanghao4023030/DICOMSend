@@ -37,12 +37,12 @@ namespace SimulatePrint
             {
                 PrintCount = 0;
                 WaterMark.CreateFolderByThreadCount();
-                //for (int i = 1; i <= Int32.Parse(WaterMark.threadCount); i++)
-                //{
-                //    string RootFolder = WaterMark.executePath + @"WaterMark" + i + @"\SCU\";
-                //    SCUClient.ConfigPrinterIP(RootFolder);
-                //}
-                //log.Info("Init the thread application folder and SCU configuration.");
+                for (int i = 1; i <= Int32.Parse(WaterMark.threadCount); i++)
+                {
+                    string RootFolder = WaterMark.executePath + @"WaterMark" + i + @"\SCU\";
+                    SCUClient.ConfigPrinterIP(RootFolder);
+                }
+                log.Info("Init the thread application folder and SCU configuration.");
                 return "true";
             }
             catch (Exception ex)
@@ -64,27 +64,33 @@ namespace SimulatePrint
             try
             {
                 if (result.Equals("true")) { 
-                    WaterMark.AddWaterMarkByFolder(localpath, Patient.PatientID + TaskID, Patient.AccessionNumber + TaskID);
-                    SCUClient.CreateDicomFile(localpath);
-                    SCUClient.SendDicomFile(localpath);
-                    log.Info("Try to send the dicom to SCP  infomartion as : " + localpath + " PID: " + Patient.PatientID + TaskID +" ACCN: "+ Patient.AccessionNumber + TaskID);
-                    
 
-                    if (ExecuteMode.ToUpper().Equals("COUNT"))
+                    //If add water mark to dicom image successfully.
+                    string addWaterMarkFlag = WaterMark.AddWaterMarkByFolder(localpath, Patient.PatientID + TaskID, Patient.AccessionNumber + TaskID);
+                    if (addWaterMarkFlag.Equals("true"))
                     {
-                        lock (l)
-                        {
-                            //Thread.Sleep(3000);
-                            PrintCount = PrintCount + 1;
-                            //Console.Out.WriteLine("Locking");
-                            //Console.Out.WriteLine("{0} DICOM has printed. The goal is: {1}", PrintCount, ExecuteCount);
-                        }
-                    }
+                        SCUClient.CreateDicomFile(localpath);
+                        SCUClient.SendDicomFile(localpath);
+                        log.Info("Try to send the dicom to SCP  infomartion as : " + localpath + " PID: " + Patient.PatientID + TaskID + " ACCN: " + Patient.AccessionNumber + TaskID);
 
+
+                        if (ExecuteMode.ToUpper().Equals("COUNT"))
+                        {
+                            lock (l)
+                            {
+                                PrintCount = PrintCount + 1;
+                            }
+                        }
+
+                        Thread.Sleep(SleepSecond * 1000);
+                        return "true";
+                    }
+                    else
+                    {
+                        log.Error("Add water mark to dicom failed. " + localpath + " " + Patient.PatientID + TaskID + " " + Patient.AccessionNumber + TaskID);
+                        return "false";
+                    }
                     
-                    //Console.Out.WriteLine(PrintCount);
-                    Thread.Sleep(SleepSecond * 1000);
-                    return "true";
                 }
                 return "false";
             }

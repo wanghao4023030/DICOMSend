@@ -22,6 +22,7 @@ namespace WaterMark
             try
             {
                 CreateWaterBMP(WaterMarkPath, PID, ACCN);
+                Thread.Sleep(1000);
                 CopyDcmToImage(WaterMarkPath);
                 AddWaterMark(WaterMarkPath);
                 log.Debug("Add water mark to DICOM file successfully." +WaterMarkPath + " " + PID + " " + ACCN);
@@ -63,8 +64,6 @@ namespace WaterMark
                     
                 }
 
-
-
                 for (int i = 1; i <= Int32.Parse(threadCount); i++)
                 {
 
@@ -92,12 +91,12 @@ namespace WaterMark
                     proc.StartInfo.WorkingDirectory = WaterMarkPath;
                     proc.StartInfo.FileName = "OutputText2BMP.exe";
                     proc.StartInfo.Arguments = "20 " + PID + " " + ACCN + " Demo.bmp";
-                    proc.StartInfo.CreateNoWindow = false;
+                    proc.StartInfo.CreateNoWindow = true;
                     proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     proc.Start();
                     proc.WaitForExit();
                     proc.Close();
-
+                    proc.Dispose();
                     log.Debug("Create water BMP file successfully. " + WaterMarkPath + " " + proc.StartInfo.FileName.ToString() + " " + proc.StartInfo.Arguments.ToString());
                     return "true";
                 }
@@ -109,6 +108,65 @@ namespace WaterMark
 
         }
 
+        //private string CopyDcmToImage(string WaterMarkPath)
+        //{
+        //    try
+        //    {
+        //        string fileName = "sample.dcm";
+        //        string sourcePath = WaterMarkPath;
+        //        string targetPath = WaterMarkPath + @"images";
+        //        string ImageFolderPath = WaterMarkPath + @"images";
+
+        //        //delete the FileShare and folders in images folder
+        //        try
+        //        {
+        //            System.IO.DirectoryInfo di = new DirectoryInfo(ImageFolderPath);
+        //            foreach (FileInfo file in di.GetFiles())
+        //            {
+        //                file.Delete();
+        //            }
+
+        //            foreach (DirectoryInfo dir in di.GetDirectories())
+        //            {
+        //                dir.Delete(true);
+        //            }
+
+        //            log.Debug("Clean the files from Watermark DIOCM folder successuflly. " + ImageFolderPath);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            log.Error("Clean the files from WaterMark DIOCM folder failed. " + ImageFolderPath,ex);
+        //            return ex.ToString();
+        //        }
+
+
+        //        // Use Path class to manipulate file and directory paths.
+        //        string sourceFile = System.IO.Path.Combine(sourcePath, fileName);
+        //        string destFile = System.IO.Path.Combine(targetPath, fileName);
+
+        //        // To copy a folder's contents to a new location:
+        //        // Create a new target folder, if necessary.
+        //        if (!System.IO.Directory.Exists(targetPath))
+        //        {
+        //            System.IO.Directory.CreateDirectory(targetPath);
+        //        }
+
+        //        // To copy a file to another location and 
+        //        // overwrite the destination file if it already exists.
+        //        System.IO.File.Copy(sourceFile, destFile, true);
+
+        //        log.Debug("Copy the SAMPLE DICOM file to Images folder in WaterMark successfully. " + ImageFolderPath);
+        //        return "true";
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error("Copy the SAMPLE DICOM file to Images folder in WaterMark failed.",ex);
+        //        return ex.ToString();
+        //    }
+
+        //}
+
         private string CopyDcmToImage(string WaterMarkPath)
         {
             try
@@ -116,29 +174,16 @@ namespace WaterMark
                 string fileName = "sample.dcm";
                 string sourcePath = WaterMarkPath;
                 string targetPath = WaterMarkPath + @"images";
-                string ImageFolderPath = WaterMarkPath + @"images";
+              
 
                 //delete the FileShare and folders in images folder
-                try
+                System.IO.DirectoryInfo di = new DirectoryInfo(targetPath);
+                foreach (FileInfo file in di.GetFiles())
                 {
-                    System.IO.DirectoryInfo di = new DirectoryInfo(ImageFolderPath);
-                    foreach (FileInfo file in di.GetFiles())
-                    {
-                        file.Delete();
-                    }
-
-                    foreach (DirectoryInfo dir in di.GetDirectories())
-                    {
-                        dir.Delete(true);
-                    }
-
-                    log.Debug("Clean the files from Watermark DIOCM folder successuflly. " + ImageFolderPath);
+                    file.Delete();
                 }
-                catch (Exception ex)
-                {
-                    log.Error("Clean the files from WaterMark DIOCM folder failed. " + ImageFolderPath,ex);
-                    return ex.ToString();
-                }
+                
+                log.Debug("Clean the files from Watermark DIOCM folder successuflly. " + targetPath);
 
 
                 // Use Path class to manipulate file and directory paths.
@@ -156,13 +201,13 @@ namespace WaterMark
                 // overwrite the destination file if it already exists.
                 System.IO.File.Copy(sourceFile, destFile, true);
 
-                log.Debug("Copy the SAMPLE DICOM file to Images folder in WaterMark successfully. " + ImageFolderPath);
+                log.Debug("Copy the SAMPLE DICOM file to Images folder in WaterMark successfully. " + targetPath);
                 return "true";
 
             }
             catch (Exception ex)
             {
-                log.Error("Copy the SAMPLE DICOM file to Images folder in WaterMark failed.",ex);
+                log.Error("Copy the SAMPLE DICOM file to Images folder in WaterMark failed.", ex);
                 return ex.ToString();
             }
 
@@ -179,12 +224,12 @@ namespace WaterMark
                 proc.StartInfo.WorkingDirectory = WaterMarkPath;
                 proc.StartInfo.FileName = "WaterMark.exe";
                 proc.StartInfo.Arguments = " " + ImageDCMPath;
-                proc.StartInfo.CreateNoWindow = false;
+                proc.StartInfo.CreateNoWindow = true;
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.Start();
                 proc.WaitForExit();
                 proc.Close();
-
+                proc.Dispose();
                 log.Debug("Add watermark information to DICOM files successfully." + ImageDCMPath);
                 return "true";
             }
