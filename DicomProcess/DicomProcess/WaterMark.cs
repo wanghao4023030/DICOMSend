@@ -97,6 +97,7 @@ namespace WaterMark
                     proc.WaitForExit();
                     proc.Close();
                     proc.Dispose();
+                    
                     log.Debug("Create water BMP file successfully. " + WaterMarkPath + " " + proc.StartInfo.FileName.ToString() + " " + proc.StartInfo.Arguments.ToString());
                     return "true";
                 }
@@ -230,6 +231,7 @@ namespace WaterMark
                 proc.WaitForExit();
                 proc.Close();
                 proc.Dispose();
+                
                 log.Debug("Add watermark information to DICOM files successfully." + ImageDCMPath);
                 return "true";
             }

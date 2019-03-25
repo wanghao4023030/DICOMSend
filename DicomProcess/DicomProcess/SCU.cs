@@ -36,6 +36,28 @@ namespace SCU
             
         }
 
+        public string ConfigAEtitle(string path,int AEnumber)
+        {
+            string FilePath = path + @"\dcmpstat.cfg.scu";
+            try
+            {
+                string text = File.ReadAllText(FilePath);
+                text = text.Replace("[DCMPSTATE]", "DCMPSTATE" + AEnumber.ToString());
+                File.WriteAllText(FilePath, text);
+                PrinterFlag = true;
+                log.Debug("Change the Print SCP IP address sucessfully. Ip is: " + PrinterIP.ToString() + " and file path is : " + FilePath);
+                return "true";
+            }
+            catch (Exception ex)
+            {
+                log.Error("Change the Print SCP IP address failed from file " + FilePath, ex);
+                return ex.ToString();
+            }
+
+        }
+
+        
+
         public string CreateDicomFile(string Path)
         {
             string SCURootPath = Path + @"SCU";
@@ -78,6 +100,7 @@ namespace SCU
                 proc.WaitForExit();
                 proc.Close();
                 proc.Dispose();
+                
                 string[] SP_DicomFilePath = System.IO.Directory.GetFiles(SCUImageFolderPath, "SP_*.dcm");
                 if (SP_DicomFilePath.Length == 1)
                 {
@@ -124,6 +147,7 @@ namespace SCU
                 proc.WaitForExit();
                 proc.Close();
                 proc.Dispose();
+                
                 log.Debug("Send DCIOM file(" + SP_DicomFilePath[0] + ") to SCP successfully.");
                 return "true";
             }

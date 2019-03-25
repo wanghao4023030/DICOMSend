@@ -6,3 +6,12 @@ D:\C#Study\DicomProcess\DicomProcess\bin\Debug\Dicom.Core.pdb
 D:\C#Study\DicomProcess\DicomProcess\obj\Debug\DicomProcess.exe
 D:\C#Study\DicomProcess\DicomProcess\obj\Debug\DicomProcess.pdb
 D:\C#Study\DicomProcess\DicomProcess\obj\Debug\DicomProcess.csprojResolveAssemblyReference.cache
+D:\PrintSender\DicomProcess\DicomProcess\bin\Debug\DicomProcess.exe.config
+D:\PrintSender\DicomProcess\DicomProcess\obj\Debug\DicomProcess.exe
+D:\PrintSender\DicomProcess\DicomProcess\obj\Debug\DicomProcess.pdb
+D:\PrintSender\DicomProcess\DicomProcess\bin\Debug\DicomProcess.exe
+D:\PrintSender\DicomProcess\DicomProcess\bin\Debug\DicomProcess.pdb
+D:\PrintSender\DicomProcess\DicomProcess\bin\Debug\Dicom.Core.dll
+D:\PrintSender\DicomProcess\DicomProcess\bin\Debug\log4net.dll
+D:\PrintSender\DicomProcess\DicomProcess\bin\Debug\Dicom.Core.pdb
+D:\PrintSender\DicomProcess\DicomProcess\obj\Debug\DicomProcess.csprojResolveAssemblyReference.cache

@@ -40,7 +40,9 @@ namespace SimulatePrint
                 for (int i = 1; i <= Int32.Parse(WaterMark.threadCount); i++)
                 {
                     string RootFolder = WaterMark.executePath + @"WaterMark" + i + @"\SCU\";
+                    int AEnumber = i;
                     SCUClient.ConfigPrinterIP(RootFolder);
+                    //SCUClient.ConfigAEtitle(RootFolder, AEnumber);
                 }
                 log.Info("Init the thread application folder and SCU configuration.");
                 return "true";
